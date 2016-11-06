@@ -1,2 +1,2 @@
-^.npy
+*.npy
 vgg16_weights.h5
