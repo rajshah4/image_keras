@@ -1,2 +1,3 @@
 *.npy
 vgg16_weights.h5
+finetuning_20epochs_vgg.h5
