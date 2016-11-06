@@ -25,10 +25,10 @@ I have tested the notebook with a docker container `ermaker/keras-jupyter`.  Thi
 You will just want to substitute your path to the notebook and data for `/Users/rajivshah/Code`  
 
 #### Download the data  
-If you look at the notebook (which you should be able to do, once the docker container is running), it notes there are data files required:  
-- Kaggle data of the images  
-- VGG16 weights (pretrained network)  
-The images are in the github repo, however, it will be necessary to download the VGG weights and place them in the mode/vgg directory.  
+There are two major sources of data needed to run this notebook:  
+- Kaggle data of the images of [cats and dogs](https://www.kaggle.com/c/dogs-vs-cats/data)  
+- [VGG16 weights](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3*) for a pretrained network 
+The images are already in the github repo, however, it will be necessary to download the VGG weights and place them in the model/vgg directory.  
 
 #### Work your way through the notebook
 The notebook is based off a brilliant blog post by Francois Chollet @fchollet https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html and a workbook by Guillaume Dominici https://github.com/gggdominici/keras-workshop  
