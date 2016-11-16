@@ -24,8 +24,8 @@ You should substitute your local path to the notebook and data for `/Users/rajiv
 #### Download the data  
 There are two major sources of data for this notebook:  
 - Kaggle data of the images of [cats and dogs](https://www.kaggle.com/c/dogs-vs-cats/data)  
-- [VGG16 weights](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3*) for a pretrained network 
-The a sample of Kaggle images of cats and dogs are already in the github repo, however, it is necessary to download the VGG weights and place them in the model/vgg directory.  
+- [VGG16 weights](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3) for a pretrained network 
+A sample of Kaggle images of cats and dogs are already in the github repo, however, it is necessary to download the VGG weights and place them in the model/vgg directory.  
 
 #### Work your way through the notebook
 The notebook is based off a brilliant blog post by Francois Chollet @fchollet https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html and a workbook by Guillaume Dominici @gggdomi https://github.com/gggdominici/keras-workshop  
