@@ -15,7 +15,7 @@ Lets step through each of these steps
 #### Get a keras docker container running  
 Much of deep learning is built around python. Python has many libraries that have conflicting dependencies that make it difficult to replicate work. Deep learning teams now rely on technologies like docker that abstract away these dependencies.  It might be a pain to learn, but if you are doing deep learning without docker, you are building an island.  
   
-I have tested the notebook with a docker container `ermaker/keras-jupyter`.  This docker container includes keras and tensorflow.  After you have installed docker on your system, the following command should get you up and running:  
+I have tested the notebook on an Ubuntu OS with a docker container `ermaker/keras-jupyter`.  This docker container includes keras and tensorflow.  After you have installed docker on your system, the following command should get you up and running:  
 
 `docker run -d -p 8888:8888 -e KERAS_BACKEND=tensorflow -v /Users/rajivshah/Code:/notebook ermaker/keras-jupyter`  
 
