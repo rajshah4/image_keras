@@ -21,6 +21,8 @@ I have tested the notebook on an Ubuntu OS with a docker container `ermaker/kera
 
 You should substitute your local path to the notebook and data for `/Users/rajivshah/Code`  
 
+You can skip using a docker container, but make sure to have tensorflow and keras installed on your machine.
+
 #### Download the data  
 There are two major sources of data for this notebook:  
 - Kaggle data of the images of [cats and dogs](https://www.kaggle.com/c/dogs-vs-cats/data)  
@@ -33,3 +35,5 @@ The notebook is based off a brilliant blog post by Francois Chollet @fchollet ht
 You should read the full blog post to understand the purpose of the notebook and the underlying details.  In sum, the blog post covers a set of techniques for building an image classification model using a small amount of image data.  It starts with building a small convolutional neural network and then improving it by augmenting the model with more data.  The notebook then discusses using a pretrained network VGG 16 layer model and ends by showing how to fine tune a pretrained network by modifying the last layers.  
   
 The problem with the blog post is that the code listed doesn’t work when you have tensorflow as a back end.  If you read the comments to the code gists, you will find a lot of frustrated people.  I spent a lot of time and picked up hints from a lot of places when putting this notebook together. The results should be a smooth experience that can let you focus on building an image classifier.
+
+The first notebook only contains code that is relevant to running models according to Chollet's blog post.  I also created a second notebook (notebook_extras) that contains additional code for those who want to inspect the training data, validate their predictions, get more details on the models, use tensorboard, or use [quiver](https://github.com/jakebian/quiver) to visualize the activation layers in their models.
