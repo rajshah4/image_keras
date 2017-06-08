@@ -24,7 +24,7 @@ You should substitute your local path to the notebook and data for `/Users/rajiv
 You can skip using a docker container, but make sure to have tensorflow and keras installed on your machine.
 
 #### Install Tensorflow/Keras for R
-The notebook for R includes the commands for installing a local copy of tensorflow and keras on your machine.
+The notebook for R includes the commands for installing a local copy of tensorflow and keras on your machine. For more background on using R and Keras, take a look at my [blog post](https://datascienceplus.com/deep-learning-with-r/).
 
 #### Download the data  
 There are two major sources of data for this notebook:  
