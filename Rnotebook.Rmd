@@ -4,7 +4,7 @@ author: by Rajiv Shah
 output: html_notebook
 ---
 
-You can find the code and data for this notebook at: https://github.com/rajshah4/image_keras  For a short background on Keras and R, please check out my [blog post](https://datascienceplus.com/deep-learning-with-r/).
+You can find the code and data for this notebook at: https://github.com/rajshah4/image_keras.  For a short background on Keras and R, please check out my [blog post](https://datascienceplus.com/deep-learning-with-r/).
 
 The work here is based on the [Keras tutorial](https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html) by Francois Chollet @fchollet  and the [workbook by Guillaume Dominici](https://github.com/gggdominici/keras-workshop).
 
