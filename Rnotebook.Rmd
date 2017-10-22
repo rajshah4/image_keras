@@ -1,7 +1,9 @@
 ---
 title: "Image Classification Done Simply Using Keras"
-author: by Rajiv Shah
-output: html_notebook
+author: "by Rajiv Shah"
+output:
+  html_document:
+    df_print: paged
 ---
 
 You can find the code and data for this notebook at: https://github.com/rajshah4/image_keras.  For a short background on Keras and R, please check out my [blog post](https://datascienceplus.com/deep-learning-with-r/).
@@ -54,14 +56,13 @@ data/
 ```
 
 ### Loading Tensorflow and Keras
-Commands for installing keras and tensorflow are included but commented out
+Commands for installing keras and tensorflow are included but commented out.
+Keras from CRAN can now also install tensorflow.
 ```{r}
-#devtools::install_github("rstudio/tensorflow")
-library(tensorflow)
-#install_tensorflow()  
-#install_tensorflow(gpu = TRUE)  
-#devtools::install_github("rstudio/keras")
 library(keras)
+#install_keras()
+#install_keras(tensorflow = "gpu")
+is_keras_available()
 ```
 
 
@@ -80,12 +81,12 @@ validation_samples = 832
 
 ### Loading images
 ```{r}
-train_generator <- flow_images_from_directory(train_directory, generator = image_data_generator(),
-  target_size = c(img_width, img_height), color_mode = "rgb",
+train_generator <- flow_images_from_directory(train_directory, generator = image_data_generator(rescale=1. / 255),  
+  target_size = c(img_height, img_width), color_mode = "rgb",
   class_mode = "binary", batch_size = batch_size, shuffle = TRUE,
   seed = 123)
 
-validation_generator <- flow_images_from_directory(validation_directory, generator = image_data_generator(),
+validation_generator <- flow_images_from_directory(validation_directory, generator = image_data_generator(rescale=1. / 255),
   target_size = c(img_width, img_height), color_mode = "rgb", classes = NULL,
   class_mode = "binary", batch_size = batch_size, shuffle = TRUE,
   seed = 123)
@@ -99,7 +100,7 @@ validation_generator <- flow_images_from_directory(validation_directory, generat
 model <- keras_model_sequential()
 
 model %>%
-  layer_conv_2d(filter = 32, kernel_size = c(3,3), input_shape = c(img_width, img_height, 3)) %>%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), input_shape = c(img_height, img_width, 3)) %>%
   layer_activation("relu") %>%
   layer_max_pooling_2d(pool_size = c(2,2)) %>% 
   
@@ -133,8 +134,8 @@ model %>% fit_generator(
   steps_per_epoch = as.integer(train_samples/batch_size), 
   epochs = epochs, 
   validation_data = validation_generator,
-  validation_steps = as.integer(validation_samples/batch_size),
-  verbose=2
+  validation_steps = as.integer(validation_samples/batch_size)
+  #,verbose=2  #Needed when using restudio server
   )
 ```
 
@@ -172,7 +173,7 @@ Example of data augmentation applied to a picture:
 model <- keras_model_sequential()
 
 model %>%
-  layer_conv_2d(filter = 32, kernel_size = c(3,3), input_shape = c(img_width, img_height, 3)) %>%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), input_shape = c(img_height, img_width, 3)) %>%
   layer_activation("relu") %>%
   layer_max_pooling_2d(pool_size = c(2,2)) %>% 
   
@@ -206,12 +207,12 @@ augment <- image_data_generator(rescale=1./255,
                                horizontal_flip=TRUE)
 
 train_generator_augmented <- flow_images_from_directory(train_directory, generator = augment,
-  target_size = c(img_width, img_height), color_mode = "rgb",
+  target_size = c(img_height, img_width), color_mode = "rgb",
   class_mode = "binary", batch_size = batch_size, shuffle = TRUE,
   seed = 123)
 
 validation_generator <- flow_images_from_directory(validation_directory, generator = image_data_generator(rescale=1./255),
-  target_size = c(img_width, img_height), color_mode = "rgb", classes = NULL,
+  target_size = c(img_height, img_width), color_mode = "rgb", classes = NULL,
   class_mode = "binary", batch_size = batch_size, shuffle = TRUE,
   seed = 123)
 
@@ -223,8 +224,8 @@ model %>% fit_generator(
   steps_per_epoch = as.integer(train_samples/batch_size), 
   epochs = epochs, 
   validation_data = validation_generator,
-  validation_steps = as.integer(validation_samples/batch_size),
-  verbose=2
+  validation_steps = as.integer(validation_samples/batch_size)
+  #,verbose=2  #Needed when using restudio server
   )
 ```
 
@@ -262,14 +263,14 @@ model_vgg <- application_vgg16(include_top = FALSE, weights = "imagenet")
 
 train_generator_bottleneck <- flow_images_from_directory(
         train_directory,
-        target_size= c(img_width, img_height),
+        target_size= c(img_height, img_width),
         batch_size=batch_size,
         class_mode=NULL,
         shuffle=FALSE)
 
 validation_generator_bottleneck <- flow_images_from_directory(
         validation_directory,
-        target_size= c(img_width, img_height),
+        target_size= c(img_height, img_width),
         batch_size=batch_size,
         class_mode=NULL,
         shuffle=FALSE)
@@ -314,8 +315,9 @@ model_top %>% fit(
         x = bottleneck_features_train, y = train_labels,
         epochs=epochs, 
         batch_size=16,  ##Hit out of memory with a batch size of 32
-        validation_data=valid,
-        verbose=2)
+        validation_data=valid
+        #,verbose=2  #Needed when using restudio server
+        )
 
 ```
 
@@ -339,7 +341,9 @@ Evolution of accuracy on training (blue) and validation (green) sets for 1 to 32
 Start by instantiating the VGG base and loading its weights.
 
 ```{r}
-model_vgg <- application_vgg16(include_top = FALSE, weights = "imagenet",input_shape =c (img_width, img_height, 3))
+model_vgg <- application_vgg16(include_top = FALSE, weights = "imagenet",
+                               input_shape = c(as.integer(img_height), as.integer(img_width), as.integer(3))
+                               )
 ```
 Build a classifier model to put on top of the convolutional model. For the fine tuning, we start with a fully trained-classifer. We will use the weights from the earlier model. And then we will add this model on top of the convolutional base.
 
@@ -382,12 +386,12 @@ augment <- image_data_generator(rescale=1./255,
                                horizontal_flip=TRUE)
 
 train_generator_augmented <- flow_images_from_directory(train_directory, generator = augment,
-  target_size = c(img_width, img_height), color_mode = "rgb",
+  target_size = c(img_height, img_width), color_mode = "rgb",
   class_mode = "binary", batch_size = batch_size, shuffle = TRUE,
   seed = 123)
 
 validation_generator <- flow_images_from_directory(validation_directory, generator = image_data_generator(rescale=1./255),
-  target_size = c(img_width, img_height), color_mode = "rgb", classes = NULL,
+  target_size = c(img_height, img_width), color_mode = "rgb", classes = NULL,
   class_mode = "binary", batch_size = batch_size, shuffle = TRUE,
   seed = 123)
 
@@ -400,8 +404,8 @@ model_ft %>% fit_generator(
   steps_per_epoch = as.integer(train_samples/batch_size), 
   epochs = epochs, 
   validation_data = validation_generator,
-  validation_steps = as.integer(validation_samples/batch_size),
-  verbose=2
+  validation_steps = as.integer(validation_samples/batch_size)
+  #,verbose=2  #Needed when using restudio server
   )
 ```
 
