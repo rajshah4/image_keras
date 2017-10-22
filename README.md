@@ -4,13 +4,21 @@
 The fact that computers can see is just not that amazing anymore.  But, the techniques for teaching a computer to do this are now simpler and more refined than ever.  This post shows you how easy it is to build an image classifier.  All you need is some basic python skills and at least a few hundred images.  
   
 The approach here uses Keras, which is emerging as the best library for building neural networks. The code here also assumes you are using Tensorflow as the underlying library (it won’t run properly if you are using Theano).  I have added notebooks for running this in Python and R.
+
+### For people attending ODSC Workhop on [Deep Learning in R Using Keras](https://odsc.com/training/portfolio/deep-learning-r-using-keras):
+- Download this repo locally
+- Install Keras for R with the following commands:
+```
+  library(keras)
+  install_keras()
+```   
   
 ### To run the code you need to:  
 - Get a keras docker container running or install tensorflow/keras on your machine
 - Download the data  
 - Work your way through the notebook  
 
-Lets step through each of these steps
+Lets go through each of these steps
 
 #### Get a keras docker container running for Python 
 Much of deep learning is built around python. Python has many libraries that have conflicting dependencies that make it difficult to replicate work. Deep learning teams now rely on technologies like docker that abstract away these dependencies.  It might be a pain to learn, but if you are doing deep learning without docker, you are building an island.  
